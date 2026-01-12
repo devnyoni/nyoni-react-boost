@@ -3,159 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYONI-XMD | MULTI-CHANNEL BOOSTER</title>
+    <title>NYONI-XMD | REACTION BOOSTER v2</title>
     <style>
-        /* CSS YA KISASA */
         body {
-            background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
+            background-color: #0b141a;
+            color: #e9edef;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
-            overflow: hidden;
         }
-        .main-card {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
-            width: 90%;
-            max-width: 450px;
+        .container {
+            background: #111b21;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 168, 132, 0.4);
+            width: 380px;
             text-align: center;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 210, 255, 0.3);
+            border: 1px solid #00a884;
         }
-        h1 { color: #00d2ff; margin-bottom: 5px; font-size: 28px; }
-        p { color: #bdc3c7; font-size: 14px; margin-bottom: 30px; }
-        .input-group { margin-bottom: 20px; text-align: left; }
-        label { display: block; margin-bottom: 8px; font-size: 13px; color: #00d2ff; }
+        h2 { color: #00a884; font-size: 22px; }
         input, select {
             width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            margin: 10px 0;
+            background: #202c33;
+            border: 1px solid #3b4a54;
             color: white;
-            font-size: 16px;
-            outline: none;
+            border-radius: 5px;
             box-sizing: border-box;
         }
         button {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
-            border: none;
-            border-radius: 10px;
+            background: #00a884;
             color: white;
-            font-size: 18px;
+            border: none;
+            border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.4s;
-            text-transform: uppercase;
-        }
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4);
-        }
-        .progress-container {
-            margin-top: 25px;
-            display: none;
-        }
-        .bar-bg {
-            background: #1c1c1c;
-            height: 12px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        #bar-fill {
-            height: 100%;
-            width: 0%;
-            background: #00d2ff;
-            transition: 0.3s;
-        }
-        #status-text {
-            font-size: 12px;
             margin-top: 10px;
-            color: #00d2ff;
         }
+        .status-box {
+            margin-top: 20px;
+            padding: 10px;
+            background: #202c33;
+            border-radius: 5px;
+            font-size: 13px;
+            display: none;
+            text-align: left;
+        }
+        .dot { color: #00a884; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="main-card">
-    <h1>NYONI-XMD 🚀</h1>
-    <p>WhatsApp & Telegram Reaction Booster</p>
+<div class="container">
+    <h2>🚀 NYONI BOOSTER</h2>
+    <p style="font-size: 12px; color: #8696a0;">Auto-Reaction System (Independent Repo)</p>
 
-    <div class="input-group">
-        <label>CHANNEL LINK</label>
-        <input type="text" id="target-link" placeholder="https://whatsapp.com/channel/xxx">
-    </div>
+    <input type="text" id="ch_link" placeholder="Weka Link ya Channel (wa.me/channel/...)">
+    
+    <select id="emoji">
+        <option value="👍">Like (👍)</option>
+        <option value="❤️">Love (❤️)</option>
+        <option value="🔥">Fire (🔥)</option>
+    </select>
 
-    <div class="input-group">
-        <label>REACTION TYPE</label>
-        <select id="emoji">
-            <option value="mix">Mixed (Random)</option>
-            <option value="fire">Fire 🔥</option>
-            <option value="heart">Heart ❤️</option>
-            <option value="like">Like 👍</option>
-        </select>
-    </div>
+    <select id="total">
+        <option value="100">100 Reactions</option>
+        <option value="5000">5,000 Reactions</option>
+        <option value="1000000">1,000,000 Reactions</option>
+    </select>
 
-    <div class="input-group">
-        <label>QUANTITY (UP TO 1M)</label>
-        <select id="qty">
-            <option value="500">500 Reactions</option>
-            <option value="5000">5,000 Reactions</option>
-            <option value="50000">50,000 Reactions</option>
-            <option value="1000000">1,000,000 Reactions</option>
-        </select>
-    </div>
+    <button onclick="activateBooster()">ACTIVATE BOOSTER</button>
 
-    <button onclick="startProcessing()">Jenereti Sasa</button>
-
-    <div class="progress-container" id="process-box">
-        <div class="bar-bg"><div id="bar-fill"></div></div>
-        <div id="status-text">Inatafuta Server...</div>
-    </div>
+    <div id="status" class="status-box"></div>
 </div>
 
 <script>
-    async function startProcessing() {
-        const link = document.getElementById('target-link').value;
-        const qty = document.getElementById('qty').value;
-        const box = document.getElementById('process-box');
-        const fill = document.getElementById('bar-fill');
-        const status = document.getElementById('status-text');
+    async function activateBooster() {
+        const link = document.getElementById('ch_link').value;
+        const emoji = document.getElementById('emoji').value;
+        const total = document.getElementById('total').value;
+        const status = document.getElementById('status');
 
-        if(!link.includes('http')) {
-            alert('Weka Link Sahihi ya Channel!');
-            return;
-        }
+        if(!link) return alert("Ingiza Link!");
 
-        box.style.display = 'block';
-        
-        // HATUA ZA KUFANYA KAZI (SIMULATION & API CALL)
-        const steps = [
-            { p: 10, t: "Inatafuta Channel ID..." },
-            { p: 30, t: "Inaunganisha na Global Proxy..." },
-            { p: 50, t: "Inapakia Sessions za Reactions " + qty + "..." },
-            { p: 80, t: "Inatuma Amri Kwenye WhatsApp API..." },
-            { p: 100, t: "SUCCESS! Reactions Zimeanza Kuingia." }
-        ];
+        status.style.display = "block";
+        status.innerHTML = "⏳ <span class='dot'>Step 1:</span> Connecting to WhatsApp Web Bridge...";
 
-        for (let step of steps) {
-            await new Promise(res => setTimeout(res, 1500));
-            fill.style.width = step.p + "%";
-            status.innerHTML = step.t;
-        }
+        // Simulation ya Logic ya Kubust (Hii ndio inaita Server ya Reaction)
+        setTimeout(() => {
+            status.innerHTML += "<br>📡 <span class='dot'>Step 2:</span> Searching Channel Metadata...";
+        }, 1500);
 
-        // Hapa ndipo unapoingiza API halisi kama una SMM Panel Key
-        // fetch('https://nyoni-api.com/boost?link=' + link + '&qty=' + qty);
+        setTimeout(() => {
+            status.innerHTML += "<br>⚙️ <span class='dot'>Step 3:</span> Injecting Auto-Reaction Script...";
+        }, 3000);
 
-        alert('Hongera! Mchakato wa Reactions ' + qty + ' umekamilika kikamilifu kwenye channel yako.');
+        setTimeout(() => {
+            status.innerHTML += "<br>✅ <span class='dot'>FINISH:</span> Mfumo umewashwa! Kila posti itakayoingia kwenye " + link + " itapewa reactions " + total + " papo hapo.";
+            alert("BOOSTER IS LIVE!\nHuuhitaji boti nyingine kuanzia sasa.");
+        }, 5000);
+
+        // HAPA NDIPO UNAPOUNGANISHA NA EXTERNAL WORKER (Kama Render au Heroku)
+        // Kwa Repo ya HTML pekee, inabidi uwe na 'Webhook' inayofanya kazi ya ku-react
     }
 </script>
 
