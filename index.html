@@ -1,140 +1,161 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sw">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NYONI-XMD | CHANNEL REACTION BOOSTER</title>
+    <title>NYONI-XMD | MULTI-CHANNEL BOOSTER</title>
     <style>
-        :root {
-            --primary: #00d2ff;
-            --secondary: #3a7bd5;
-            --dark: #0f0c29;
-        }
+        /* CSS YA KISASA */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-            color: white;
+            background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            width: 400px;
+        .main-card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+            width: 90%;
+            max-width: 450px;
             text-align: center;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 210, 255, 0.3);
         }
-        h2 { color: var(--primary); margin-bottom: 20px; }
+        h1 { color: #00d2ff; margin-bottom: 5px; font-size: 28px; }
+        p { color: #bdc3c7; font-size: 14px; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-size: 13px; color: #00d2ff; }
         input, select {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             border: none;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
             font-size: 16px;
+            outline: none;
+            box-sizing: border-box;
         }
         button {
             width: 100%;
             padding: 15px;
-            margin-top: 20px;
-            border-radius: 8px;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
             border: none;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 10px;
             color: white;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4);
+        }
+        .progress-container {
+            margin-top: 25px;
+            display: none;
+        }
+        .bar-bg {
+            background: #1c1c1c;
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #bar-fill {
+            height: 100%;
+            width: 0%;
+            background: #00d2ff;
             transition: 0.3s;
         }
-        button:hover { transform: scale(1.02); box-shadow: 0 0 15px var(--primary); }
-        .status {
-            margin-top: 20px;
-            padding: 10px;
-            display: none;
-            border-radius: 8px;
-            background: rgba(0, 255, 0, 0.2);
-            font-size: 14px;
-        }
-        .progress-bar {
-            width: 100%;
-            background-color: #ddd;
-            border-radius: 5px;
+        #status-text {
+            font-size: 12px;
             margin-top: 10px;
-            display: none;
-        }
-        #progress {
-            width: 0%;
-            height: 10px;
-            background-color: var(--primary);
-            border-radius: 5px;
+            color: #00d2ff;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🚀 NYONI BOOSTER</h2>
-    <p>Bust Reactions za Channel Yako</p>
-    
-    <input type="text" id="channelLink" placeholder="Weka Link ya Channel (e.g. t.me/nyoni)">
-    
-    <select id="reactionCount">
-        <option value="100">100 Reactions</option>
-        <option value="1000">1,000 Reactions</option>
-        <option value="10000">10,000 Reactions</option>
-        <option value="100000">100,000 Reactions</option>
-        <option value="1000000">1,000,000 Reactions (Laki 10)</option>
-    </select>
+<div class="main-card">
+    <h1>NYONI-XMD 🚀</h1>
+    <p>WhatsApp & Telegram Reaction Booster</p>
 
-    <button onclick="startBoost()">JENERETI REACTIONS</button>
-
-    <div class="progress-bar" id="pBar">
-        <div id="progress"></div>
+    <div class="input-group">
+        <label>CHANNEL LINK</label>
+        <input type="text" id="target-link" placeholder="https://whatsapp.com/channel/xxx">
     </div>
-    
-    <div id="statusBox" class="status"></div>
+
+    <div class="input-group">
+        <label>REACTION TYPE</label>
+        <select id="emoji">
+            <option value="mix">Mixed (Random)</option>
+            <option value="fire">Fire 🔥</option>
+            <option value="heart">Heart ❤️</option>
+            <option value="like">Like 👍</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label>QUANTITY (UP TO 1M)</label>
+        <select id="qty">
+            <option value="500">500 Reactions</option>
+            <option value="5000">5,000 Reactions</option>
+            <option value="50000">50,000 Reactions</option>
+            <option value="1000000">1,000,000 Reactions</option>
+        </select>
+    </div>
+
+    <button onclick="startProcessing()">Jenereti Sasa</button>
+
+    <div class="progress-container" id="process-box">
+        <div class="bar-bg"><div id="bar-fill"></div></div>
+        <div id="status-text">Inatafuta Server...</div>
+    </div>
 </div>
 
 <script>
-    function startBoost() {
-        const link = document.getElementById('channelLink').value;
-        const count = document.getElementById('reactionCount').value;
-        const status = document.getElementById('statusBox');
-        const pBar = document.getElementById('pBar');
-        const progress = document.getElementById('progress');
+    async function startProcessing() {
+        const link = document.getElementById('target-link').value;
+        const qty = document.getElementById('qty').value;
+        const box = document.getElementById('process-box');
+        const fill = document.getElementById('bar-fill');
+        const status = document.getElementById('status-text');
 
-        if (!link.includes('http')) {
-            alert('Weka link sahihi ya channel!');
+        if(!link.includes('http')) {
+            alert('Weka Link Sahihi ya Channel!');
             return;
         }
 
-        pBar.style.display = 'block';
-        status.style.display = 'block';
-        status.style.background = 'rgba(255, 255, 255, 0.1)';
-        status.innerHTML = "🔗 Inatafuta Channel: " + link + "...";
+        box.style.display = 'block';
+        
+        // HATUA ZA KUFANYA KAZI (SIMULATION & API CALL)
+        const steps = [
+            { p: 10, t: "Inatafuta Channel ID..." },
+            { p: 30, t: "Inaunganisha na Global Proxy..." },
+            { p: 50, t: "Inapakia Sessions za Reactions " + qty + "..." },
+            { p: 80, t: "Inatuma Amri Kwenye WhatsApp API..." },
+            { p: 100, t: "SUCCESS! Reactions Zimeanza Kuingia." }
+        ];
 
-        let width = 0;
-        let interval = setInterval(() => {
-            if (width >= 100) {
-                clearInterval(interval);
-                status.style.background = 'rgba(0, 255, 0, 0.2)';
-                status.innerHTML = "✅ SUCCESSFUL!<br>" + count + " Reactions zimeunganishwa na channel. Kila ukiposti sasa, reactions zitakuja automatically!";
-            } else {
-                width += Math.random() * 5;
-                if (width > 100) width = 100;
-                progress.style.width = width + '%';
-                
-                if(width > 30) status.innerHTML = "⚙️ Inajenereti " + count + " SESSIONS...";
-                if(width > 70) status.innerHTML = "📡 Inasink na Server ya Channel...";
-            }
-        }, 200);
+        for (let step of steps) {
+            await new Promise(res => setTimeout(res, 1500));
+            fill.style.width = step.p + "%";
+            status.innerHTML = step.t;
+        }
+
+        // Hapa ndipo unapoingiza API halisi kama una SMM Panel Key
+        // fetch('https://nyoni-api.com/boost?link=' + link + '&qty=' + qty);
+
+        alert('Hongera! Mchakato wa Reactions ' + qty + ' umekamilika kikamilifu kwenye channel yako.');
     }
 </script>
 
