@@ -1,0 +1,142 @@
+ <!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYONI-XMD | CHANNEL REACTION BOOSTER</title>
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --dark: #0f0c29;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 400px;
+            text-align: center;
+        }
+        h2 { color: var(--primary); margin-bottom: 20px; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { transform: scale(1.02); box-shadow: 0 0 15px var(--primary); }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            display: none;
+            border-radius: 8px;
+            background: rgba(0, 255, 0, 0.2);
+            font-size: 14px;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+        #progress {
+            width: 0%;
+            height: 10px;
+            background-color: var(--primary);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🚀 NYONI BOOSTER</h2>
+    <p>Bust Reactions za Channel Yako</p>
+    
+    <input type="text" id="channelLink" placeholder="Weka Link ya Channel (e.g. t.me/nyoni)">
+    
+    <select id="reactionCount">
+        <option value="100">100 Reactions</option>
+        <option value="1000">1,000 Reactions</option>
+        <option value="10000">10,000 Reactions</option>
+        <option value="100000">100,000 Reactions</option>
+        <option value="1000000">1,000,000 Reactions (Laki 10)</option>
+    </select>
+
+    <button onclick="startBoost()">JENERETI REACTIONS</button>
+
+    <div class="progress-bar" id="pBar">
+        <div id="progress"></div>
+    </div>
+    
+    <div id="statusBox" class="status"></div>
+</div>
+
+<script>
+    function startBoost() {
+        const link = document.getElementById('channelLink').value;
+        const count = document.getElementById('reactionCount').value;
+        const status = document.getElementById('statusBox');
+        const pBar = document.getElementById('pBar');
+        const progress = document.getElementById('progress');
+
+        if (!link.includes('http')) {
+            alert('Weka link sahihi ya channel!');
+            return;
+        }
+
+        pBar.style.display = 'block';
+        status.style.display = 'block';
+        status.style.background = 'rgba(255, 255, 255, 0.1)';
+        status.innerHTML = "🔗 Inatafuta Channel: " + link + "...";
+
+        let width = 0;
+        let interval = setInterval(() => {
+            if (width >= 100) {
+                clearInterval(interval);
+                status.style.background = 'rgba(0, 255, 0, 0.2)';
+                status.innerHTML = "✅ SUCCESSFUL!<br>" + count + " Reactions zimeunganishwa na channel. Kila ukiposti sasa, reactions zitakuja automatically!";
+            } else {
+                width += Math.random() * 5;
+                if (width > 100) width = 100;
+                progress.style.width = width + '%';
+                
+                if(width > 30) status.innerHTML = "⚙️ Inajenereti " + count + " SESSIONS...";
+                if(width > 70) status.innerHTML = "📡 Inasink na Server ya Channel...";
+            }
+        }, 200);
+    }
+</script>
+
+</body>
+</html>
